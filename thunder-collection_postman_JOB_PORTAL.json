@@ -1,0 +1,448 @@
+{
+    "info": {
+        "_postman_id": "569b67f7-b0f2-4a7c-8afa-605a2914ef0f",
+        "name": "JOB_PORTAL",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "USER",
+            "item": [
+                {
+                    "name": "Register a user",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "http://localhost:5000/api/v1/user/register",
+                            "path": [
+                                "api",
+                                "v1",
+                                "user",
+                                "register"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"email\":\"kaushalnepal@gmail.com\",\r\n      \"fullname\":\"kaushal\",\r\n      \"password\":\"kaushal123\" ,\r\n      \"phoneNumber\":9848940101,\r\n      \"role\":\"student\"\r\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "login a user",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "http://localhost:5000/api/v1/user/login",
+                            "path": [
+                                "api",
+                                "v1",
+                                "user",
+                                "login"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"email\":\"kirannepal@gmail.com\",\n  \"password\":\"kaushal123\",\n  \"role\":\"student\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "update a user information",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "http://localhost:5000/api/v1/user/profile/update",
+                            "path": [
+                                "api",
+                                "v1",
+                                "user",
+                                "profile",
+                                "update"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"fullname\":\"kiran\",\n\"email\":\"kirannepal@gmail.com\", \n\"phoneNumber\":\"9841211617\", \n\"bio\":\"okie\"\n\n\n  \n}"
+                        }
+                    }
+                },
+                {
+                    "name": "logout a user information",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:5000/api/v1/user/logout",
+                            "path": [
+                                "api",
+                                "v1",
+                                "user",
+                                "logout"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "COMPANY",
+            "item": [
+                {
+                    "name": "register a company",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "http://localhost:5000/api/v1/company/register",
+                            "path": [
+                                "api",
+                                "v1",
+                                "company",
+                                "register"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n\"name\":\"esewa\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "get all company details",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:5000/api/v1/company/get",
+                            "path": [
+                                "api",
+                                "v1",
+                                "company",
+                                "get"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000"
+                        }
+                    }
+                },
+                {
+                    "name": "get company by id",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:5000/api/v1/company/get/685938b84c01f5c5cb27a12c",
+                            "path": [
+                                "api",
+                                "v1",
+                                "company",
+                                "get",
+                                "685938b84c01f5c5cb27a12c"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"name\":\"BYD\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "update company information",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "http://localhost:5000/api/v1/company/update/685938b84c01f5c5cb27a12c",
+                            "path": [
+                                "api",
+                                "v1",
+                                "company",
+                                "update",
+                                "685938b84c01f5c5cb27a12c"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"name\":\"Esewa pvt  lmt\"\n}"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "JOB",
+            "item": [
+                {
+                    "name": "Create a job",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "http://localhost:5000/api/v1/job/post",
+                            "path": [
+                                "api",
+                                "v1",
+                                "job",
+                                "post"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\r\n  \"title\": \"Full Stack Developer\",\r\n  \"description\": \"Responsible for developing and maintaining web applications.\",\r\n  \"requirements\": \r\n    \"JavaScript,React,Node.js,MongoDB\"\r\n  ,\r\n  \"salary\": 70000,\r\n  \"experience\": 2,\r\n  \"position\": 1,\r\n  \"companyId\": \"685938b84c01f5c5cb27a12c\",\r\n  \"location\": \"Kathmandu, Nepal\",\r\n  \"jobType\":\"full Time\"\r\n}\r\n"
+                        }
+                    }
+                },
+                {
+                    "name": "get all job ",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:5000/api/v1/job/get",
+                            "path": [
+                                "api",
+                                "v1",
+                                "job",
+                                "get"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"title\": \"Backend Engineer\",\n  \"description\": \"Build and maintain scalable backend services using Node.js and Express.\",\n  \"requirements\": \"Node.js,Express,MongoDB,REST APIs,Docker\",\n  \"salary\": 85000,\n  \"experience\": 3,\n  \"position\": 2,\n  \"companyId\": \"685938b84c01f5c5cb27a12c\",\n  \"location\": \"Lalitpur, Nepal\",\n  \"jobType\": \"Remote - Full Time\"\n}\n"
+                        }
+                    }
+                },
+                {
+                    "name": "get admin jobs",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:5000/api/v1/job/getadminjobs",
+                            "path": [
+                                "api",
+                                "v1",
+                                "job",
+                                "getadminjobs"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000"
+                        }
+                    }
+                },
+                {
+                    "name": "Get job by id",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:5000/api/v1/job/get/68595be9b5db820b42daeda5",
+                            "path": [
+                                "api",
+                                "v1",
+                                "job",
+                                "get",
+                                "68595be9b5db820b42daeda5"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "APPLICATION",
+            "item": [
+                {
+                    "name": "Apply to Job",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:5000/api/v1/application/apply/68595be9b5db820b42daeda5",
+                            "path": [
+                                "api",
+                                "v1",
+                                "application",
+                                "apply",
+                                "68595be9b5db820b42daeda5"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000"
+                        }
+                    }
+                },
+                {
+                    "name": "See who applied for the job Applicants",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:5000/api/v1/application/get",
+                            "path": [
+                                "api",
+                                "v1",
+                                "application",
+                                "get"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000"
+                        }
+                    }
+                },
+                {
+                    "name": "get applicants that appied for the job",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:5000/api/v1/application/applicants/68595be9b5db820b42daeda5",
+                            "path": [
+                                "api",
+                                "v1",
+                                "application",
+                                "applicants",
+                                "68595be9b5db820b42daeda5"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"status\":\"Accepted\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Update status of job applicants",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "http://localhost:5000/api/v1/application/status/685a581df797814099e3b87e/update",
+                            "path": [
+                                "api",
+                                "v1",
+                                "application",
+                                "status",
+                                "685a581df797814099e3b87e",
+                                "update"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"status\":\"rejected\"\n}"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

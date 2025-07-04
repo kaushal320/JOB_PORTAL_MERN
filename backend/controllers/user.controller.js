@@ -6,11 +6,15 @@ export const register = async (req, res) => {
     const { email, fullname, password, phoneNumber, role } = req.body;
 
     if (!fullname || !phoneNumber || !password || !role || !email) {
-      return res.status(400).json({ message: "All fields are required." });
+      return res
+        .status(400)
+        .json({ message: "All fields are required.", success: false });
     }
     const user = await User.findOne({ email });
     if (user) {
-      return res.status(409).json({ message: "User already exists." });
+      return res
+        .status(409)
+        .json({ message: "User already exists.", success: false });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     await User.create({
@@ -20,11 +24,13 @@ export const register = async (req, res) => {
       phoneNumber,
       role,
     });
-    return res.status(201).json({ message: "User registered successfully." });
+    return res
+      .status(201)
+      .json({ message: "User registered successfully.", success: true });
   } catch (error) {
     return res
       .status(500)
-      .json({ message: "Server error.", error: error.message });
+      .json({ message: "Server error.", error: error.message, success: false });
   }
 };
 export const login = async (req, res) => {
@@ -32,23 +38,30 @@ export const login = async (req, res) => {
     const { email, password, role } = req.body;
 
     if (!email || !password || !role) {
-      return res
-        .status(400)
-        .json({ message: "Email, password, and role are required." });
+      return res.status(400).json({
+        message: "Email, password, and role are required.",
+        success: false,
+      });
     }
 
     let user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ message: "Invalid email or password." });
+      return res
+        .status(401)
+        .json({ message: "Invalid email or password.", success: false });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ message: "Invalid email or password." });
+      return res
+        .status(401)
+        .json({ message: "Invalid  password.", success: false });
     }
     //check role is correct or not
     if (role !== user.role) {
-      return res.status(403).json({ message: "Incorrect role." });
+      return res
+        .status(403)
+        .json({ message: "Incorrect role.", success: false });
     }
     // Generate JWT token
 
@@ -69,7 +82,9 @@ export const login = async (req, res) => {
 
     // Set token as cookie and send JSON response
     res.cookie("token", token, { httpOnly: true, maxAge: 3600000 }); // 1 hour
-    return res.status(200).json({ message: "Login successful.", token, user });
+    return res
+      .status(200)
+      .json({ message: "Login successful.", success: true, token, user });
   } catch (error) {
     return res
       .status(500)
@@ -94,7 +109,7 @@ export const updateProfile = async (req, res) => {
 
     const userId = req.user?.id || req.user?._id;
     if (!userId) {
-      return res.status(401).json({ message: "Unauthorized." });
+      return res.status(401).json({ message: "Unauthorized.", success: false });
     }
 
     const updateFields = {};
@@ -120,7 +135,9 @@ export const updateProfile = async (req, res) => {
     });
 
     if (!updatedUser) {
-      return res.status(404).json({ message: "User not found." });
+      return res
+        .status(404)
+        .json({ message: "User not found.", success: false });
     }
 
     return res
