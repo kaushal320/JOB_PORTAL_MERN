@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import axios from "axios";
-import { USER_API_ENDPOINT } from "@/utils/constant";
+import { APPLICATION_API_ENDPOINT } from "@/utils/constant";
 
 const getStatusStyle = (status) => {
   switch (status?.toLowerCase()) {
@@ -31,7 +31,7 @@ const AppliedJobsTable = () => {
   useEffect(() => {
     const fetchAppliedJobs = async () => {
       try {
-        const res = await axios.get(`${USER_API_ENDPOINT}/application/get`, {
+        const res = await axios.get(`${APPLICATION_API_ENDPOINT}/get`, {
           withCredentials: true,
         });
 
@@ -39,6 +39,10 @@ const AppliedJobsTable = () => {
           setApplications(res.data.applications);
         } else {
           setApplications([]);
+        }
+        if (res.data.success) {
+          console.log("✅ Applications:", res.data.applications); // Debug
+          setApplications(res.data.applications);
         }
       } catch (error) {
         console.error("❌ Error fetching applied jobs:", error);
