@@ -20,13 +20,23 @@ const Profile = () => {
     bio = "",
     skills = [],
     resumeUrl = "",
-    resumeName = "",
+    resumeOriginalName = "",
+    resumePublicId = "",
     profilePhoto = "",
   } = profile;
 
   const resumeFileName =
-    resumeName || (resumeUrl ? resumeUrl.split("/").pop() : "");
+    resumeOriginalName || (resumeUrl ? resumeUrl.split("/").pop() : "");
+  const resumeDownloadUrl = resumePublicId
+    ? `https://res.cloudinary.com/djaculgbk/raw/upload/fl_attachment:${encodeURIComponent(
+        resumeFileName
+      )}/${resumePublicId}`
+    : resumeUrl.replace(
+        /\/upload\/(v[0-9]+\/)?/,
+        `/upload/fl_attachment:${encodeURIComponent(resumeFileName)}/`
+      );
 
+  console.log("Download URL:", resumeDownloadUrl); // Debug
   return (
     <div className="bg-gray-50 min-h-screen">
       <Navbar />
@@ -105,8 +115,7 @@ const Profile = () => {
                     View
                   </a>
                   <a
-                    href={resumeUrl}
-                    download
+                    href={resumeDownloadUrl}
                     className="text-sm text-green-600 hover:underline"
                   >
                     Download
