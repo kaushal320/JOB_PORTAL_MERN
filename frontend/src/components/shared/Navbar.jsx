@@ -8,8 +8,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "../ui/button";
 import { LogOut, User2 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 const Navbar = () => {
-  const [user, setUser] = useState(false);
+  const { user } = useSelector((store) => store.auth);
   return (
     <div className="bg-white">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16 px-4">
@@ -20,9 +21,15 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-12 ">
           <ul className="flex items-center gap-5 list-none font-medium">
-            <li>Home</li>
-            <li>Job</li>
-            <li>About</li>
+            <li>
+              <Link to={"/"}>Home</Link>
+            </li>
+            <li>
+              <Link to={"/jobs"}>Jobs</Link>
+            </li>
+            <li>
+              <Link to={"/browse"}>Browse</Link>
+            </li>
           </ul>
           {!user ? (
             <div className="flex gap-2 items-center">
@@ -66,7 +73,10 @@ const Navbar = () => {
                 <div className="flex flex-col items-start text-gray-600 ">
                   <div className="flex  items-center   ">
                     <User2 />
-                    <Button variant="link">View Profile</Button>
+                    <Button variant="link">
+                      {" "}
+                      <Link to={"/profile"}>View Profile</Link>{" "}
+                    </Button>
                   </div>
 
                   <div className="flex pl-1  items-center ">

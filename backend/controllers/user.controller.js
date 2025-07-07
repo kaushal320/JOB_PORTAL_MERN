@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import streamUpload from "../utils/cloudinaryUpload.js";
 export const register = async (req, res) => {
   try {
     const { email, fullname, password, phoneNumber, role } = req.body;
@@ -82,9 +83,12 @@ export const login = async (req, res) => {
 
     // Set token as cookie and send JSON response
     res.cookie("token", token, { httpOnly: true, maxAge: 3600000 }); // 1 hour
-    return res
-      .status(200)
-      .json({ message: "Login successful.", success: true, token, user });
+    return res.status(200).json({
+      message: `Login successful. Welcome ${user.fullname}`,
+      success: true,
+      token,
+      user,
+    });
   } catch (error) {
     return res
       .status(500)
@@ -102,6 +106,7 @@ export const logout = async (req, res) => {
       .json({ message: "Server error.", error: error.message });
   }
 };
+
 export const updateProfile = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
@@ -109,7 +114,7 @@ export const updateProfile = async (req, res) => {
 
     const userId = req.user?.id || req.user?._id;
     if (!userId) {
-      return res.status(401).json({ message: "Unauthorized.", success: false });
+      return res.status(401).json({ message: "Unauthorized", success: false });
     }
 
     const updateFields = {};
@@ -117,35 +122,41 @@ export const updateProfile = async (req, res) => {
     if (fullname) updateFields.fullname = fullname;
     if (email) updateFields.email = email;
     if (phoneNumber) updateFields.phoneNumber = phoneNumber;
-    if (bio) updateFields.bio = bio;
+
+    updateFields.profile = updateFields.profile || {};
+
+    if (bio) updateFields.profile.bio = bio;
     if (skills) {
-      updateFields.skills = skills.split(",").map((skill) => skill.trim());
+      updateFields.profile.skills = skills
+        .split(",")
+        .map((s) => s.trim())
+        .filter((s) => s.length > 0);
     }
 
-    // Optionally handle profile image upload if needed
     if (file) {
-      const cloudinaryResult = await cloudinary.uploader.upload(file.path, {
-        folder: "profile_pictures",
-      });
-      updateFields.profileImage = cloudinaryResult.secure_url;
+      const uploaded = await streamUpload(file.buffer); // ✅ Use buffer here
+      updateFields.profile.resumeUrl = uploaded.secure_url;
     }
 
     const updatedUser = await User.findByIdAndUpdate(userId, updateFields, {
       new: true,
+      runValidators: true,
     });
 
     if (!updatedUser) {
       return res
         .status(404)
-        .json({ message: "User not found.", success: false });
+        .json({ message: "User not found", success: false });
     }
 
-    return res
-      .status(200)
-      .json({ message: "Profile updated successfully.", user: updatedUser });
+    return res.status(200).json({
+      message: "Profile updated successfully",
+      user: updatedUser,
+    });
   } catch (error) {
+    console.error("❌ Error updating profile:", error);
     return res
       .status(500)
-      .json({ message: "Server error.", error: error.message });
+      .json({ message: "Server error", error: error.message });
   }
 };
