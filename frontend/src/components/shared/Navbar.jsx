@@ -7,10 +7,31 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "../ui/button";
 import { LogOut, User2 } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { USER_API_ENDPOINT } from "@/utils/constant";
+import { toast } from "sonner";
+import { setUser } from "@/redux/authSlice";
+
 const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const logoutHandler = async () => {
+    try {
+      const res = await axios.get(`${USER_API_ENDPOINT}/logout`, {
+        withCredentials: true,
+      });
+      if (res.data.success) {
+        dispatch(setUser(null));
+        navigate("/");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
   return (
     <div className="bg-white">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16 px-4">
@@ -54,7 +75,12 @@ const Navbar = () => {
             <Popover>
               <PopoverTrigger>
                 <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarImage
+                    src={
+                      user?.profile?.profilePhoto ||
+                      "https://github.com/shadcn.png"
+                    }
+                  />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
               </PopoverTrigger>
@@ -62,13 +88,18 @@ const Navbar = () => {
               <PopoverContent>
                 <div className="flex gap-4 items-center">
                   <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarImage
+                      src={
+                        user?.profile?.profilePhoto ||
+                        "https://github.com/shadcn.png"
+                      }
+                    />
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
-                  <h4 className="font-medium">Kaushal Mern Stack</h4>
+                  <h4 className="font-medium">{user?.fullname}</h4>
                 </div>
-                <p className="text-gray-500 text-sm pt-2">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                <p className="text-gray-500 text-sm pt-2 ">
+                  {user?.profile?.bio || "No bio available."}
                 </p>
                 <div className="flex flex-col items-start text-gray-600 ">
                   <div className="flex  items-center   ">
@@ -81,7 +112,9 @@ const Navbar = () => {
 
                   <div className="flex pl-1  items-center ">
                     <LogOut />
-                    <Button variant="link">Logout</Button>
+                    <Button onClick={logoutHandler} variant="link">
+                      Logout
+                    </Button>
                   </div>
                 </div>
               </PopoverContent>
