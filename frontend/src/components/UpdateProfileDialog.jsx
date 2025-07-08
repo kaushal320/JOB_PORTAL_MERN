@@ -16,8 +16,10 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { USER_API_ENDPOINT } from "@/utils/constant";
 import { setUser } from "@/redux/authSlice";
+import { Loader2 } from "lucide-react";
 
 const UpdateProfileDialog = ({ open, setOpen }) => {
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.auth);
 
@@ -75,6 +77,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     }
 
     try {
+      setLoading(true);
       const res = await axios.put(
         `${USER_API_ENDPOINT}/profile/update`,
         updatedFields,
@@ -97,6 +100,8 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       console.log("✅ Profile updated:", updatedUser);
     } catch (error) {
       console.error("❌ Error updating profile:", error);
+    } finally {
+      setLoading(false); // stop loading in all cases
     }
   };
 
@@ -183,12 +188,16 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 Cancel
               </Button>
             </DialogClose>
-            <Button
-              type="submit"
-              className="bg-red-400 hover:bg-red-500 text-white"
-            >
-              Save Changes
-            </Button>
+            {loading ? (
+              <Button className="bg-red-400" type="submit" disabled>
+                <Loader2 className=" bg-red-400 h-4 w-4 animate-spin " />
+                Please wait
+              </Button>
+            ) : (
+              <Button className="bg-red-400 hover:bg-red-500" type="submit">
+                Save Changes
+              </Button>
+            )}
           </DialogFooter>
         </form>
       </DialogContent>

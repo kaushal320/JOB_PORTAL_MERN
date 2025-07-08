@@ -4,9 +4,9 @@ import { Bookmark } from "lucide-react";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Navigate, useNavigate } from "react-router-dom";
 
-const Job = () => {
+const Job = ({ job }) => {
   const navigate = useNavigate();
-  const jobId = "hello";
+  const jobId = job._id;
   return (
     <div className="flex flex-col gap-4 bg-white shadow-md rounded-2xl p-4 sm:p-6 border w-full max-w-xl mx-auto">
       {/* Top: Company Info */}
@@ -17,10 +17,10 @@ const Job = () => {
           </Avatar>
           <div>
             <h2 className="text-base sm:text-lg font-semibold">
-              TechVerse Pvt. Ltd.
+              {job?.company?.name}
             </h2>
             <p className="text-xs sm:text-sm text-muted-foreground">
-              Nepal #1 • 2 days ago
+              {job?.location}
             </p>
           </div>
         </div>
@@ -28,10 +28,9 @@ const Job = () => {
 
       {/* Middle: Job Title & Description */}
       <div>
-        <h3 className="text-lg sm:text-xl font-bold">Frontend Developer</h3>
+        <h3 className="text-lg sm:text-xl font-bold">{job?.title}</h3>
         <p className="text-sm sm:text-base text-gray-600 mt-1">
-          We’re looking for a skilled frontend developer proficient in React.js
-          and Tailwind CSS to join our growing team in Kathmandu.
+          {job?.description}
         </p>
       </div>
 
