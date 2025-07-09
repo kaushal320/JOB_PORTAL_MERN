@@ -1,17 +1,8 @@
-// middleware/upload.js
 import multer from "multer";
 import path from "path";
 
-// TEMP local storage (optional, you can go memory if you want)
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/"); // you must create this folder or use memoryStorage
-  },
-  filename: function (req, file, cb) {
-    const ext = path.extname(file.originalname);
-    cb(null, `${Date.now()}-${file.fieldname}${ext}`);
-  },
-});
+// Use memory storage instead of disk
+const storage = multer.memoryStorage();
 
 const upload = multer({
   storage,

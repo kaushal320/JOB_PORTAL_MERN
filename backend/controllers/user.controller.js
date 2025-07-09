@@ -99,7 +99,9 @@ export const login = async (req, res) => {
 export const logout = async (req, res) => {
   try {
     res.clearCookie("token");
-    return res.status(200).json({ message: "Logout successful." });
+    return res
+      .status(200)
+      .json({ message: "Logout successful.", success: true });
   } catch (error) {
     return res
       .status(500)
@@ -134,8 +136,10 @@ export const updateProfile = async (req, res) => {
     }
 
     if (file) {
-      const uploaded = await streamUpload(file.buffer); // ✅ Use buffer here
+      const uploaded = await streamUpload(file.buffer, file.originalname);
       updateFields.profile.resumeUrl = uploaded.secure_url;
+      updateFields.profile.resumeOriginalName = file.originalname;
+      updateFields.profile.resumePublicId = uploaded.public_id; // Store public_id
     }
 
     const updatedUser = await User.findByIdAndUpdate(userId, updateFields, {
