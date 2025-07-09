@@ -42,15 +42,28 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-12 ">
           <ul className="flex items-center gap-5 list-none font-medium">
-            <li>
-              <Link to={"/"}>Home</Link>
-            </li>
-            <li>
-              <Link to={"/jobs"}>Jobs</Link>
-            </li>
-            <li>
-              <Link to={"/browse"}>Browse</Link>
-            </li>
+            {user && user.role === "recruiter" ? (
+              <>
+                <li>
+                  <Link to={"admin/companies"}>Companies</Link>
+                </li>
+                <li>
+                  <Link to={"/admin/jobs"}>Jobs</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to={"/"}>Home</Link>
+                </li>
+                <li>
+                  <Link to={"/jobs"}>Jobs</Link>
+                </li>
+                <li>
+                  <Link to={"/browse"}>Browse</Link>
+                </li>
+              </>
+            )}
           </ul>
           {!user ? (
             <div className="flex gap-2 items-center">
@@ -102,13 +115,17 @@ const Navbar = () => {
                   {user?.profile?.bio || "No bio available."}
                 </p>
                 <div className="flex flex-col items-start text-gray-600 ">
-                  <div className="flex  items-center   ">
-                    <User2 />
-                    <Button variant="link">
-                      {" "}
-                      <Link to={"/profile"}>View Profile</Link>{" "}
-                    </Button>
-                  </div>
+                  {user && user.role === "student" ? (
+                    <div className="flex  items-center   ">
+                      <User2 />
+                      <Button variant="link">
+                        {" "}
+                        <Link to={"/profile"}>View Profile</Link>{" "}
+                      </Button>
+                    </div>
+                  ) : (
+                    ""
+                  )}
 
                   <div className="flex pl-1  items-center ">
                     <LogOut />
